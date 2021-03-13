@@ -1,0 +1,64 @@
+{
+  "name": "extra-timers",
+  "version": "0.1.0",
+  "description": "Utilities for timers",
+  "keywords": [
+    "setTimeout",
+    "setInterval",
+    "setImmediate"
+  ],
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "main": "lib/es2018/index.js",
+  "types": "lib/es2018/index.d.ts",
+  "repository": "git@github.com:BlackGlory/extra-timers.git",
+  "author": "BlackGlory <woshenmedoubuzhidao@blackglory.me>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx --quiet src __tests__",
+    "test": "jest --no-cache --config jest.config.js",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+    "test:coverage": "jest --coverage --config jest.config.js",
+    "prepublishOnly": "run-s clean build bundle",
+    "clean": "run-p clean:*",
+    "clean:build": "rimraf lib",
+    "build": "run-p build:*",
+    "build:es2015": "run-s build:es2015:*",
+    "build:es2015:compile": "tsc --project tsconfig.build.json --module commonjs --target es2015 --outDir lib/es2015",
+    "build:es2015:patch": "tscpaths -p tsconfig.build.json -s ./src -o ./lib/es2015",
+    "build:es2018": "run-s build:es2018:*",
+    "build:es2018:compile": "tsc --project tsconfig.build.json --module commonjs --target es2018 --outDir lib/es2018",
+    "build:es2018:patch": "tscpaths -p tsconfig.build.json -s ./src -o ./lib/es2018",
+    "bundle": "rollup --config rollup.config.js",
+    "release": "standard-version"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-s lint test",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^12.0.1",
+    "@commitlint/config-conventional": "^12.0.1",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.34",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
+    "eslint": "^7.21.0",
+    "extra-promise": "^0.15.4",
+    "husky": "4",
+    "jest": "^26.6.3",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "standard-version": "^9.1.1",
+    "ts-jest": "^26.5.3",
+    "tscpaths": "^0.0.9",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "@blackglory/types": "^0.3.3"
+  }
+}
