@@ -33,7 +33,7 @@ function createOptions({ directory, target }) {
 
   return [
     {
-      input: 'src/browser.ts'
+      input: 'src/index.ts'
     , output: createOutput('index')
     , plugins: [
         ...commonPlugins
@@ -41,7 +41,7 @@ function createOptions({ directory, target }) {
       ]
     }
   , {
-      input: 'src/browser.ts'
+      input: 'src/index.ts'
     , output: createMinification('index')
     , plugins: [
         ...commonPlugins
