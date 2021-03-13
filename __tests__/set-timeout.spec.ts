@@ -5,17 +5,17 @@ import { TIME_ERROR } from '@test/utils'
 describe('setTimeout(cb: () => unknown, timeout: number): () => void', () => {
   it('will call `cb` after `timeout`', done => {
     const start = Date.now()
-    setTimeout(() => {
+    setTimeout(1000, () => {
       expect(Date.now() - start).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
       expect(Date.now() - start).toBeLessThan(1500)
       done()
-    }, 1000)
+    })
   })
 
   it('will call `cb` once', async () => {
     const cb = jest.fn()
 
-    setTimeout(cb, 0)
+    setTimeout(0, cb)
     await delay(1000)
 
     expect(cb).toBeCalledTimes(1)
@@ -24,7 +24,7 @@ describe('setTimeout(cb: () => unknown, timeout: number): () => void', () => {
   it('can be cancelled', async () => {
     const cb = jest.fn()
 
-    const cancel = setTimeout(cb, 0)
+    const cancel = setTimeout(0, cb)
     cancel()
     await delay(1000)
 

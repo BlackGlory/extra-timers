@@ -1,8 +1,8 @@
 import { setTimeout } from './set-timeout'
 
-export function setDynamicTimeoutLoop(cb: () => unknown, timeout: number): () => void {
+export function setDynamicTimeoutLoop(timeout: number, cb: () => unknown): () => void {
   let isCancelled = false
-  let cancel = setTimeout(loop, timeout)
+  let cancel = setTimeout(timeout, loop)
   return () => {
     isCancelled = true
     cancel()
@@ -12,6 +12,6 @@ export function setDynamicTimeoutLoop(cb: () => unknown, timeout: number): () =>
     const start = Date.now()
     await cb()
     const elapsed = Date.now() - start
-    if (!isCancelled) cancel = setTimeout(loop, Math.max(timeout - elapsed, 0))
+    if (!isCancelled) cancel = setTimeout(Math.max(timeout - elapsed, 0), loop)
   }
 }

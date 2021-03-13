@@ -20,13 +20,13 @@ describe('setDynamicTimeoutLoop(cb: () => unknown, timeout: number): () => void'
         done()
       })
 
-    setDynamicTimeoutLoop(cb, 1000)
+    setDynamicTimeoutLoop(1000, cb)
   })
 
   it('will call `cb` multiple times', async () => {
     const cb = jest.fn()
 
-    setDynamicTimeoutLoop(cb, 0)
+    setDynamicTimeoutLoop(0, cb)
     await delay(1000)
 
     expect(cb.mock.calls.length).toBeGreaterThan(1)
@@ -35,7 +35,7 @@ describe('setDynamicTimeoutLoop(cb: () => unknown, timeout: number): () => void'
   it('can be cancelled', async () => {
     const cb = jest.fn()
 
-    const cancel = setDynamicTimeoutLoop(cb, 0)
+    const cancel = setDynamicTimeoutLoop(0, cb)
     cancel()
     await delay(1000)
 
@@ -45,7 +45,7 @@ describe('setDynamicTimeoutLoop(cb: () => unknown, timeout: number): () => void'
   it('always can be cancelled', async () => {
     const cb = jest.fn().mockImplementation(() => cancel())
 
-    const cancel = setDynamicTimeoutLoop(cb, 0)
+    const cancel = setDynamicTimeoutLoop(0, cb)
     await delay(1000)
 
     expect(cb).toBeCalledTimes(1)

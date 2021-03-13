@@ -15,20 +15,22 @@ yarn add extra-timers
 ### setTimeout
 
 ```ts
-function setTimeout(cb: () => unknown, timeout: number): () => void
+function setTimeout(timeout: number, cb: () => unknown): () => void
 ```
 
 A wrapper for `globalThis.setTimeout`, with the following differences:
+- Better order of parameters.
 - No function parameters binding.
 - The return value is the function to cancel the timer.
 
 ### setInterval
 
 ```ts
-function setInterval(cb: () => unknown, timeout: number): () => void
+function setInterval(timeout: number, cb: () => unknown): () => void
 ```
 
 A wrapper for `globalThis.setInterval`, with the following differences:
+- Better order of parameters.
 - No function parameters binding.
 - The return value is the function to cancel the timer.
 
@@ -47,7 +49,7 @@ When `globalThis.setImmediate` does not exist, it will fall back to `setTimeout(
 ### setTimeoutLoop
 
 ```ts
-function setTimeoutLoop(cb: () => unknown, timeout: number): () => void
+function setTimeoutLoop(timeout: number, cb: () => unknown): () => void
 ```
 
 Create an interval timer using the nested `setTimeout`,
@@ -58,7 +60,7 @@ The return value is the function to cancel the timer.
 ### setDynamicTimeoutLoop
 
 ```ts
-function setDynamicTimeoutLoop(cb: () => unknown, timeout: number): () => void
+function setDynamicTimeoutLoop(timeout: number, cb: () => unknown): () => void
 ```
 
 Create an interval timer using the nested `setTimeout`,

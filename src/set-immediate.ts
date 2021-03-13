@@ -5,6 +5,6 @@ export function setImmediate(cb: () => unknown): () => void {
     const timer = globalThis.setImmediate(cb)
     return () => clearImmediate(timer)
   } else {
-    return setTimeout(cb, 0)
+    return setTimeout(0, cb)
   }
 }

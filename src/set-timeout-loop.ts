@@ -1,8 +1,8 @@
 import { setTimeout } from './set-timeout'
 
-export function setTimeoutLoop(cb: () => unknown, timeout: number): () => void {
+export function setTimeoutLoop(timeout: number, cb: () => unknown): () => void {
   let isCancelled = false
-  let cancel = setTimeout(loop, timeout)
+  let cancel = setTimeout(timeout, loop)
   return () => {
     isCancelled = true
     cancel()
@@ -10,6 +10,6 @@ export function setTimeoutLoop(cb: () => unknown, timeout: number): () => void {
 
   async function loop() {
     await cb()
-    if (!isCancelled) cancel = setTimeout(loop, timeout)
+    if (!isCancelled) cancel = setTimeout(timeout, loop)
   }
 }
