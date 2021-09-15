@@ -30,4 +30,13 @@ describe('setTimeout(timeout: number, cb: () => unknown): () => void', () => {
 
     expect(cb).not.toBeCalled()
   })
+
+  test('edge: timeout < 0', async () => {
+    const cb = jest.fn()
+
+    setTimeout(-1000, cb)
+    await delay(1000)
+
+    expect(cb).toBeCalledTimes(1)
+  })
 })
