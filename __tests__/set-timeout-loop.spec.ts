@@ -2,7 +2,7 @@ import { delay } from 'extra-promise'
 import { TIME_ERROR } from '@test/utils'
 import { setTimeoutLoop } from '@src/set-timeout-loop'
 
-describe('setTimeoutLoop(cb: () => unknown, timeout: number): () => void', () => {
+describe('setTimeoutLoop(timeout: number, cb: () => unknown): () => void', () => {
   it('will call `cb` after `timeout`', done => {
     const timing: number[] = [Date.now()]
     const cb = jest.fn()

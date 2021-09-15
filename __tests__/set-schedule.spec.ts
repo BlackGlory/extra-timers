@@ -1,11 +1,11 @@
 import { delay } from 'extra-promise'
-import { setTimeout } from '@src/set-timeout'
+import { setSchedule } from '@src/set-schedule'
 import { TIME_ERROR } from '@test/utils'
 
-describe('setTimeout(timeout: number, cb: () => unknown): () => void', () => {
-  it('will call `cb` after `timeout`', done => {
+describe('setSchedule(timestamp: number, cb: () => unknown)', () => {
+  it('will call `cb` at `timestamp`', done => {
     const start = Date.now()
-    setTimeout(1000, () => {
+    setSchedule(start + 1000, () => {
       expect(Date.now() - start).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
       expect(Date.now() - start).toBeLessThan(1500)
       done()
@@ -15,7 +15,7 @@ describe('setTimeout(timeout: number, cb: () => unknown): () => void', () => {
   it('will call `cb` once', async () => {
     const cb = jest.fn()
 
-    setTimeout(0, cb)
+    setSchedule(0, cb)
     await delay(1000)
 
     expect(cb).toBeCalledTimes(1)
@@ -23,8 +23,9 @@ describe('setTimeout(timeout: number, cb: () => unknown): () => void', () => {
 
   it('can be cancelled', async () => {
     const cb = jest.fn()
+    const start = Date.now()
 
-    const cancel = setTimeout(0, cb)
+    const cancel = setSchedule(start + 1000, cb)
     cancel()
     await delay(1000)
 

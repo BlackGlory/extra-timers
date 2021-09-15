@@ -23,6 +23,12 @@ A wrapper for `globalThis.setTimeout`, with the following differences:
 - No function parameters binding.
 - The return value is the function to cancel the timer.
 
+### setSchedule
+
+```ts
+function setSchedule(timestamp: number, cb: () => unknown): () => void
+```
+
 ### setInterval
 
 ```ts

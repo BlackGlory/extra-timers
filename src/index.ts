@@ -1,4 +1,5 @@
 export * from './set-timeout'
+export * from './set-schedule'
 export * from './set-interval'
 export * from './set-immediate'
 export * from './set-timeout-loop'
