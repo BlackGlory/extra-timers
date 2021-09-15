@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.2](https://github.com/BlackGlory/extra-timers/compare/v0.2.1...v0.2.2) (2021-09-15)
+
+
+### Features
+
+* add setSchedule ([843526d](https://github.com/BlackGlory/extra-timers/commit/843526db43554a9ecc9f5e507d4fb1e96cbfa7ac))
+
 ### [0.2.1](https://github.com/BlackGlory/extra-timers/compare/v0.2.0...v0.2.1) (2021-03-27)
 
 ## [0.2.0](https://github.com/BlackGlory/extra-timers/compare/v0.1.0...v0.2.0) (2021-03-13)
