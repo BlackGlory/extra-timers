@@ -18,7 +18,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js,.jsx,.ts,.tsx --quiet src __tests__",
-    "test": "jest --no-cache --config jest.config.js",
+    "test": "jest --forceExit --no-cache --config jest.config.js",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "test:coverage": "jest --coverage --config jest.config.js",
     "prepublishOnly": "run-s clean build bundle",
@@ -66,5 +66,8 @@
     "tscpaths": "^0.0.9",
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "why-is-node-running": "^2.2.0"
   }
 }
