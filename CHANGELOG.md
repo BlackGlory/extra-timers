@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/BlackGlory/extra-timers/compare/v0.2.2...v0.2.3) (2021-12-03)
+
+
+### Features
+
+* add calculateExponentialBackoffTimeout ([3fc3e2d](https://github.com/BlackGlory/extra-timers/commit/3fc3e2dfb9ba3fc0cacfb2bdc64c0c6c344a91ff))
+
 ### [0.2.2](https://github.com/BlackGlory/extra-timers/compare/v0.2.1...v0.2.2) (2021-09-15)
 
 
