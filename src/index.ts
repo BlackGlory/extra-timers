@@ -1,3 +1,4 @@
+export * from './exponential-backoff'
 export * from './set-timeout'
 export * from './set-schedule'
 export * from './set-interval'
