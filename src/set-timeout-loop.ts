@@ -10,6 +10,8 @@ export function setTimeoutLoop(timeout: number, cb: () => unknown): () => void {
 
   async function loop() {
     await cb()
-    if (!isCancelled) cancel = setTimeout(timeout, loop)
+    if (!isCancelled) {
+      cancel = setTimeout(timeout, loop)
+    }
   }
 }
