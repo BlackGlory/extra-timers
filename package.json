@@ -55,7 +55,7 @@
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
     "eslint": "^8.4.1",
-    "extra-promise": "^0.19.4",
+    "extra-promise": "^0.21.0",
     "husky": "4",
     "jest": "^27.4.4",
     "jest-extended": "^1.2.0",
