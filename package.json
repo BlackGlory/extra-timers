@@ -9,10 +9,7 @@
     "exponential",
     "backoff"
   ],
-  "files": [
-    "lib",
-    "dist"
-  ],
+  "files": ["lib"],
   "main": "lib/es2018/index.js",
   "types": "lib/es2018/index.d.ts",
   "sideEffects": false,
@@ -24,7 +21,7 @@
     "test": "jest --forceExit --no-cache --config jest.config.js",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
     "test:coverage": "jest --coverage --config jest.config.js",
-    "prepublishOnly": "run-s clean build bundle",
+    "prepublishOnly": "run-s clean build",
     "clean": "run-p clean:*",
     "clean:build": "rimraf lib",
     "build": "run-p build:*",
@@ -34,7 +31,6 @@
     "build:es2018": "run-s build:es2018:*",
     "build:es2018:compile": "tsc --project tsconfig.build.json --module commonjs --target es2018 --outDir lib/es2018",
     "build:es2018:patch": "tscpaths -p tsconfig.build.json -s ./src -o ./lib/es2018",
-    "bundle": "rollup --config rollup.config.js",
     "release": "standard-version"
   },
   "husky": {
@@ -46,11 +42,6 @@
   "devDependencies": {
     "@commitlint/cli": "^16.0.1",
     "@commitlint/config-conventional": "^16.0.0",
-    "@rollup/plugin-commonjs": "^21.0.1",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^13.1.3",
-    "@rollup/plugin-replace": "^3.0.1",
-    "@rollup/plugin-typescript": "^8.3.0",
     "@types/jest": "^27.4.0",
     "@types/node": "14",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
@@ -62,9 +53,6 @@
     "jest-extended": "^1.2.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2",
-    "rollup": "^2.63.0",
-    "rollup-plugin-analyzer": "^4.0.0",
-    "rollup-plugin-terser": "^7.0.2",
     "standard-version": "^9.3.2",
     "ts-jest": "^27.1.2",
     "tscpaths": "^0.0.9",
