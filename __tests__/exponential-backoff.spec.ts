@@ -1,5 +1,4 @@
 import { calculateExponentialBackoffTimeout } from '@src/exponential-backoff'
-import 'jest-extended'
 
 describe(`
   calculateExponentialBackoffTimeout({
@@ -20,7 +19,8 @@ describe(`
     , jitter: false
     })
 
-    expect(timeout).toBeWithin(1500, 2000)
+    expect(timeout).toBeGreaterThanOrEqual(1500)
+    expect(timeout).toBeLessThan(2000)
   })
 
   describe('jitter', () => {
