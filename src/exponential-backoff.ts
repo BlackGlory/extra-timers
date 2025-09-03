@@ -14,9 +14,7 @@ export function calculateExponentialBackoffTimeout({
   jitter?: boolean
 }): number {
   const timeout = Math.min(factor ** retries * baseTimeout, maxTimeout)
-  if (jitter) {
-    return randomIntInclusive(0, timeout)
-  } else {
-    return timeout
-  }
+  return jitter
+       ? randomIntInclusive(0, timeout)
+       : timeout
 }

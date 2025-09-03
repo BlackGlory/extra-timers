@@ -29,7 +29,8 @@ function setSchedule(timestamp: number, cb: () => unknown): () => void
 function setInterval(timeout: number, cb: () => unknown): () => void
 ```
 
-A wrapper for `globalThis.setInterval`, with the following differences:
+A wrapper for `setTimeout` instead of `globalThis.setInterval`,
+with the following differences:
 - Better order of parameters.
 - No function parameters binding.
 - The return value is the function to cancel the timer.
