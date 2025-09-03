@@ -17,7 +17,7 @@ function setTimeout(timeout: number, cb: () => unknown): () => void
 A wrapper for `globalThis.setTimeout`, with the following differences:
 - Better order of parameters.
 - The return value is the function to cancel the timer.
-- It works correctly on Node.js ([nodejs#26578](https://github.com/nodejs/node/issues/26578))
+- It works correctly on Node.js [#26578](https://github.com/nodejs/node/issues/26578).
 - It works correctly when `timeout` is `Infinity`.
 - It works correctly when `timeout` is greater than `2147483647`.
 
