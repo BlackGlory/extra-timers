@@ -16,35 +16,31 @@ function setTimeout(timeout: number, cb: () => unknown): () => void
 
 A wrapper for `globalThis.setTimeout`, with the following differences:
 - Better order of parameters.
-- No function parameters binding.
 - The return value is the function to cancel the timer.
+- It works correctly on Node.js ([nodejs#26578](https://github.com/nodejs/node/issues/26578))
+- It works correctly when `timeout` is `Infinity`.
+- It works correctly when `timeout` is greater than `2147483647`.
 
 ### setSchedule
 ```ts
 function setSchedule(timestamp: number, cb: () => unknown): () => void
 ```
 
+A wrapper for `setTimeout`.
+
 ### setInterval
 ```ts
 function setInterval(timeout: number, cb: () => unknown): () => void
 ```
 
-A wrapper for `setTimeout` instead of `globalThis.setInterval`,
-with the following differences:
-- Better order of parameters.
-- No function parameters binding.
-- The return value is the function to cancel the timer.
+A wrapper for `setTimeout` instead of `globalThis.setInterval`.
 
 ### setImmediate
 ```ts
 function setImmediate(cb: () => unknown): () => void
 ```
 
-A wrapper for `globalThis.setImmedidate`, with the following differences:
-- No function parameters binding.
-- The return value is the function to cancel the timer.
-
-When `globalThis.setImmediate` does not exist, it will fall back to `setTimeout(cb, 0)`.
+A wrapper for `gloalThis.setImmediate` and `setTimeout(0, cb)`.
 
 ### setTimeoutLoop
 ```ts

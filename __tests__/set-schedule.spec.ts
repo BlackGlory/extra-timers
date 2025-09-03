@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { delay, Deferred } from 'extra-promise'
 import { setSchedule } from '@src/set-schedule.js'
-import { TIME_ERROR } from '@test/utils.js'
 
 describe('setSchedule', () => {
   it('will call `cb` at `timestamp`', async () => {
@@ -11,7 +10,7 @@ describe('setSchedule', () => {
     setSchedule(start + 1000, () => deferred.resolve())
     await deferred
 
-    expect(Date.now() - start).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
+    expect(Date.now() - start).toBeGreaterThanOrEqual(1000)
     expect(Date.now() - start).toBeLessThan(1500)
   })
 
@@ -19,7 +18,7 @@ describe('setSchedule', () => {
     const cb = vi.fn()
 
     setSchedule(0, cb)
-    await delay(1000)
+    await delay(100)
 
     expect(cb).toBeCalledTimes(1)
   })
@@ -28,7 +27,7 @@ describe('setSchedule', () => {
     const cb = vi.fn()
     const start = Date.now()
 
-    const cancel = setSchedule(start + 1000, cb)
+    const cancel = setSchedule(start + 100, cb)
     cancel()
     await delay(1000)
 

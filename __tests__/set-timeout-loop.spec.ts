@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
 import { delay, Deferred } from 'extra-promise'
-import { TIME_ERROR } from '@test/utils.js'
 import { setTimeoutLoop } from '@src/set-timeout-loop.js'
 
 describe('setTimeoutLoop', () => {
@@ -20,15 +19,15 @@ describe('setTimeoutLoop', () => {
     setTimeoutLoop(1000, cb)
     await deferred
 
-    expect(timing[1] - timing[0]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
-    expect(timing[2] - timing[1]).toBeGreaterThanOrEqual(2000 - TIME_ERROR)
+    expect(timing[1] - timing[0]).toBeGreaterThanOrEqual(1000)
+    expect(timing[2] - timing[1]).toBeGreaterThanOrEqual(2000)
   })
 
   it('will call `cb` multiple times', async () => {
     const cb = vi.fn()
 
     setTimeoutLoop(0, cb)
-    await delay(1000)
+    await delay(100)
 
     expect(cb.mock.calls.length).toBeGreaterThan(1)
   })
@@ -38,7 +37,7 @@ describe('setTimeoutLoop', () => {
 
     const cancel = setTimeoutLoop(0, cb)
     cancel()
-    await delay(1000)
+    await delay(100)
 
     expect(cb).not.toBeCalled()
   })
@@ -47,7 +46,7 @@ describe('setTimeoutLoop', () => {
     const cb = vi.fn().mockImplementation(() => cancel())
 
     const cancel = setTimeoutLoop(0, cb)
-    await delay(1000)
+    await delay(100)
 
     expect(cb).toBeCalledTimes(1)
   })

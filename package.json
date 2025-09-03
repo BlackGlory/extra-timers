@@ -57,6 +57,8 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "extra-rand": "^0.4.1"
+    "@blackglory/pass": "^1.1.1",
+    "extra-rand": "^0.4.1",
+    "extra-utils": "^5.19.0"
   }
 }

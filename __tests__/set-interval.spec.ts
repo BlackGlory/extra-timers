@@ -1,7 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { Deferred, delay } from 'extra-promise'
 import { setInterval } from '@src/set-interval.js'
-import { TIME_ERROR } from '@test/utils.js'
 
 describe('setInterval', () => {
   it('will call `cb` after `timeout`', async () => {
@@ -21,9 +20,9 @@ describe('setInterval', () => {
     await deferred
     cancel()
 
-    expect(timing[1] - timing[0]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
+    expect(timing[1] - timing[0]).toBeGreaterThanOrEqual(1000)
     expect(timing[1] - timing[0]).toBeLessThan(1500)
-    expect(timing[2] - timing[1]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
+    expect(timing[2] - timing[1]).toBeGreaterThanOrEqual(1000)
     expect(timing[2] - timing[1]).toBeLessThan(1500)
   })
 
@@ -31,7 +30,7 @@ describe('setInterval', () => {
     const cb = vi.fn()
 
     const cancel = setInterval(0, cb)
-    await delay(1000)
+    await delay(100)
 
     try {
       expect(cb.mock.calls.length).toBeGreaterThan(1)
@@ -45,7 +44,7 @@ describe('setInterval', () => {
 
     const cancel = setInterval(0, cb)
     cancel()
-    await delay(1000)
+    await delay(100)
 
     expect(cb).not.toBeCalled()
   })
@@ -54,7 +53,7 @@ describe('setInterval', () => {
     const cb = vi.fn().mockImplementation(() => cancel())
 
     const cancel = setInterval(0, cb)
-    await delay(1000)
+    await delay(100)
 
     try {
       expect(cb).toBeCalledTimes(1)

@@ -17,7 +17,7 @@ describe('setImmediate', () => {
     const cb = vi.fn()
 
     setImmediate(cb)
-    await delay(1000)
+    await delay(100)
 
     expect(cb).toBeCalledTimes(1)
   })
@@ -27,7 +27,7 @@ describe('setImmediate', () => {
 
     const cancel = setImmediate(cb)
     cancel()
-    await delay(1000)
+    await delay(100)
 
     expect(cb).not.toBeCalled()
   })
