@@ -49,6 +49,17 @@ describe('setInterval', () => {
     expect(cb).not.toBeCalled()
   })
 
+  it('can be cancelled multiple times', async () => {
+    const cb = vi.fn()
+
+    const cancel = setInterval(0, cb)
+    cancel()
+    cancel()
+    await delay(100)
+
+    expect(cb).not.toBeCalled()
+  })
+
   it('always can be cancelled', async () => {
     const cb = vi.fn().mockImplementation(() => cancel())
 

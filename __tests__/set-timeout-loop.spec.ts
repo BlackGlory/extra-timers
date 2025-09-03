@@ -42,12 +42,27 @@ describe('setTimeoutLoop', () => {
     expect(cb).not.toBeCalled()
   })
 
+  it('can be cancelled multiple times', async () => {
+    const cb = vi.fn()
+
+    const cancel = setTimeoutLoop(0, cb)
+    cancel()
+    cancel()
+    await delay(100)
+
+    expect(cb).not.toBeCalled()
+  })
+
   it('always can be cancelled', async () => {
     const cb = vi.fn().mockImplementation(() => cancel())
 
     const cancel = setTimeoutLoop(0, cb)
     await delay(100)
 
-    expect(cb).toBeCalledTimes(1)
+    try {
+      expect(cb).toBeCalledTimes(1)
+    } finally {
+      cancel()
+    }
   })
 })

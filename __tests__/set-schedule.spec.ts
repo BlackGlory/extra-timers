@@ -33,4 +33,16 @@ describe('setSchedule', () => {
 
     expect(cb).not.toBeCalled()
   })
+
+  it('can be cancelled multiple times', async () => {
+    const cb = vi.fn()
+    const start = Date.now()
+
+    const cancel = setSchedule(start + 100, cb)
+    cancel()
+    cancel()
+    await delay(1000)
+
+    expect(cb).not.toBeCalled()
+  })
 })
