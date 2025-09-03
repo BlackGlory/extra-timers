@@ -1,4 +1,4 @@
-import { setTimeout } from './set-timeout'
+import { setTimeout } from './set-timeout.js'
 
 export function setDynamicTimeoutLoop(timeout: number, cb: () => unknown): () => void {
   let isCancelled = false

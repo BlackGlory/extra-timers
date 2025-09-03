@@ -1,19 +1,22 @@
-import { delay } from 'extra-promise'
-import { setSchedule } from '@src/set-schedule'
-import { TIME_ERROR } from '@test/utils'
+import { describe, it, expect, vi } from 'vitest'
+import { delay, Deferred } from 'extra-promise'
+import { setSchedule } from '@src/set-schedule.js'
+import { TIME_ERROR } from '@test/utils.js'
 
-describe('setSchedule(timestamp: number, cb: () => unknown)', () => {
-  it('will call `cb` at `timestamp`', done => {
+describe('setSchedule', () => {
+  it('will call `cb` at `timestamp`', async () => {
+    const deferred = new Deferred<void>()
+
     const start = Date.now()
-    setSchedule(start + 1000, () => {
-      expect(Date.now() - start).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
-      expect(Date.now() - start).toBeLessThan(1500)
-      done()
-    })
+    setSchedule(start + 1000, () => deferred.resolve())
+    await deferred
+
+    expect(Date.now() - start).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
+    expect(Date.now() - start).toBeLessThan(1500)
   })
 
   it('will call `cb` once', async () => {
-    const cb = jest.fn()
+    const cb = vi.fn()
 
     setSchedule(0, cb)
     await delay(1000)
@@ -22,7 +25,7 @@ describe('setSchedule(timestamp: number, cb: () => unknown)', () => {
   })
 
   it('can be cancelled', async () => {
-    const cb = jest.fn()
+    const cb = vi.fn()
     const start = Date.now()
 
     const cancel = setSchedule(start + 1000, cb)

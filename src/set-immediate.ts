@@ -1,4 +1,4 @@
-import { setTimeout } from './set-timeout'
+import { setTimeout } from './set-timeout.js'
 
 export function setImmediate(cb: () => unknown): () => void {
   if (globalThis.setImmediate) {

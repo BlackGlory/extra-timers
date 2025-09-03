@@ -1,30 +1,33 @@
-import { delay } from 'extra-promise'
-import { TIME_ERROR } from '@test/utils'
-import { setDynamicTimeoutLoop } from '@src/set-dynamic-timeout-loop'
+import { describe, it, expect, vi } from 'vitest'
+import { delay, Deferred } from 'extra-promise'
+import { TIME_ERROR } from '@test/utils.js'
+import { setDynamicTimeoutLoop } from '@src/set-dynamic-timeout-loop.js'
 
-describe('setDynamicTimeoutLoop(timeout: number, cb: () => unknown): () => void', () => {
-  it('will call `cb` after `timeout`', done => {
+describe('setDynamicTimeoutLoop', () => {
+  it('will call `cb` after `timeout`', async () => {
+    const deferred = new Deferred<void>()
+
     const timing: number[] = [Date.now()]
-    const cb = jest.fn()
+    const cb = vi.fn()
       .mockImplementationOnce(async () => {
         timing.push(Date.now())
         await delay(1000)
       })
       .mockImplementationOnce(() => {
         timing.push(Date.now())
-
-        expect(timing[1] - timing[0]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
-        expect(timing[1] - timing[0]).toBeLessThan(1500)
-        expect(timing[2] - timing[1]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
-        expect(timing[2] - timing[1]).toBeLessThan(1500)
-        done()
+        deferred.resolve()
       })
-
     setDynamicTimeoutLoop(1000, cb)
+    await deferred
+
+    expect(timing[1] - timing[0]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
+    expect(timing[1] - timing[0]).toBeLessThan(1500)
+    expect(timing[2] - timing[1]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
+    expect(timing[2] - timing[1]).toBeLessThan(1500)
   })
 
   it('will call `cb` multiple times', async () => {
-    const cb = jest.fn()
+    const cb = vi.fn()
 
     setDynamicTimeoutLoop(0, cb)
     await delay(1000)
@@ -33,7 +36,7 @@ describe('setDynamicTimeoutLoop(timeout: number, cb: () => unknown): () => void'
   })
 
   it('can be cancelled', async () => {
-    const cb = jest.fn()
+    const cb = vi.fn()
 
     const cancel = setDynamicTimeoutLoop(0, cb)
     cancel()
@@ -43,7 +46,7 @@ describe('setDynamicTimeoutLoop(timeout: number, cb: () => unknown): () => void'
   })
 
   it('always can be cancelled', async () => {
-    const cb = jest.fn().mockImplementation(() => cancel())
+    const cb = vi.fn().mockImplementation(() => cancel())
 
     const cancel = setDynamicTimeoutLoop(0, cb)
     await delay(1000)

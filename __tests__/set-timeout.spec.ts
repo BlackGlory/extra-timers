@@ -1,19 +1,22 @@
-import { delay } from 'extra-promise'
-import { setTimeout } from '@src/set-timeout'
-import { TIME_ERROR } from '@test/utils'
+import { describe, it, test, expect, vi } from 'vitest'
+import { delay, Deferred } from 'extra-promise'
+import { setTimeout } from '@src/set-timeout.js'
+import { TIME_ERROR } from '@test/utils.js'
 
-describe('setTimeout(timeout: number, cb: () => unknown): () => void', () => {
-  it('will call `cb` after `timeout`', done => {
+describe('setTimeout', () => {
+  it('will call `cb` after `timeout`', async () => {
+    const deferred = new Deferred<void>()
+
     const start = Date.now()
-    setTimeout(1000, () => {
-      expect(Date.now() - start).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
-      expect(Date.now() - start).toBeLessThan(1500)
-      done()
-    })
+    setTimeout(1000, () => deferred.resolve())
+    await deferred
+
+    expect(Date.now() - start).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
+    expect(Date.now() - start).toBeLessThan(1500)
   })
 
   it('will call `cb` once', async () => {
-    const cb = jest.fn()
+    const cb = vi.fn()
 
     setTimeout(0, cb)
     await delay(1000)
@@ -22,7 +25,7 @@ describe('setTimeout(timeout: number, cb: () => unknown): () => void', () => {
   })
 
   it('can be cancelled', async () => {
-    const cb = jest.fn()
+    const cb = vi.fn()
 
     const cancel = setTimeout(0, cb)
     cancel()
@@ -32,7 +35,7 @@ describe('setTimeout(timeout: number, cb: () => unknown): () => void', () => {
   })
 
   test('edge: timeout < 0', async () => {
-    const cb = jest.fn()
+    const cb = vi.fn()
 
     setTimeout(-1000, cb)
     await delay(1000)

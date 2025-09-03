@@ -1,33 +1,34 @@
-import { delay } from 'extra-promise'
-import { setInterval } from '@src/set-interval'
-import { TIME_ERROR } from '@test/utils'
+import { describe, it, expect, vi } from 'vitest'
+import { Deferred, delay } from 'extra-promise'
+import { setInterval } from '@src/set-interval.js'
+import { TIME_ERROR } from '@test/utils.js'
 
-describe('setInterval(timeout: number, cb: () => unknown): () => void', () => {
-  it('will call `cb` after `timeout`', done => {
+describe('setInterval', () => {
+  it('will call `cb` after `timeout`', async () => {
+    const deferred = new Deferred<void>()
+
     const timing: number[] = [Date.now()]
-    const cb = jest.fn()
+    const cb = vi.fn()
       .mockImplementationOnce(() => {
         timing.push(Date.now())
       })
       .mockImplementationOnce(() => {
         timing.push(Date.now())
-
-        try {
-          expect(timing[1] - timing[0]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
-          expect(timing[1] - timing[0]).toBeLessThan(1500)
-          expect(timing[2] - timing[1]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
-          expect(timing[2] - timing[1]).toBeLessThan(1500)
-          done()
-        } finally {
-          cancel()
-        }
+        deferred.resolve()
       })
 
     const cancel = setInterval(1000, cb)
+    await deferred
+    cancel()
+
+    expect(timing[1] - timing[0]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
+    expect(timing[1] - timing[0]).toBeLessThan(1500)
+    expect(timing[2] - timing[1]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
+    expect(timing[2] - timing[1]).toBeLessThan(1500)
   })
 
   it('will call `cb` multiple times', async () => {
-    const cb = jest.fn()
+    const cb = vi.fn()
 
     const cancel = setInterval(0, cb)
     await delay(1000)
@@ -40,7 +41,7 @@ describe('setInterval(timeout: number, cb: () => unknown): () => void', () => {
   })
 
   it('can be cancelled', async () => {
-    const cb = jest.fn()
+    const cb = vi.fn()
 
     const cancel = setInterval(0, cb)
     cancel()
@@ -50,7 +51,7 @@ describe('setInterval(timeout: number, cb: () => unknown): () => void', () => {
   })
 
   it('always can be cancelled', async () => {
-    const cb = jest.fn().mockImplementation(() => cancel())
+    const cb = vi.fn().mockImplementation(() => cancel())
 
     const cancel = setInterval(0, cb)
     await delay(1000)

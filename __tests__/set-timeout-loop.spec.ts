@@ -1,28 +1,31 @@
-import { delay } from 'extra-promise'
-import { TIME_ERROR } from '@test/utils'
-import { setTimeoutLoop } from '@src/set-timeout-loop'
+import { describe, it, expect, vi } from 'vitest'
+import { delay, Deferred } from 'extra-promise'
+import { TIME_ERROR } from '@test/utils.js'
+import { setTimeoutLoop } from '@src/set-timeout-loop.js'
 
-describe('setTimeoutLoop(timeout: number, cb: () => unknown): () => void', () => {
-  it('will call `cb` after `timeout`', done => {
+describe('setTimeoutLoop', () => {
+  it('will call `cb` after `timeout`', async () => {
+    const deferred = new Deferred<void>()
+
     const timing: number[] = [Date.now()]
-    const cb = jest.fn()
+    const cb = vi.fn()
       .mockImplementationOnce(async () => {
         timing.push(Date.now())
         await delay(1000)
       })
       .mockImplementationOnce(() => {
         timing.push(Date.now())
-
-        expect(timing[1] - timing[0]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
-        expect(timing[2] - timing[1]).toBeGreaterThanOrEqual(2000 - TIME_ERROR)
-        done()
+        deferred.resolve()
       })
-
     setTimeoutLoop(1000, cb)
+    await deferred
+
+    expect(timing[1] - timing[0]).toBeGreaterThanOrEqual(1000 - TIME_ERROR)
+    expect(timing[2] - timing[1]).toBeGreaterThanOrEqual(2000 - TIME_ERROR)
   })
 
   it('will call `cb` multiple times', async () => {
-    const cb = jest.fn()
+    const cb = vi.fn()
 
     setTimeoutLoop(0, cb)
     await delay(1000)
@@ -31,7 +34,7 @@ describe('setTimeoutLoop(timeout: number, cb: () => unknown): () => void', () =>
   })
 
   it('can be cancelled', async () => {
-    const cb = jest.fn()
+    const cb = vi.fn()
 
     const cancel = setTimeoutLoop(0, cb)
     cancel()
@@ -41,7 +44,7 @@ describe('setTimeoutLoop(timeout: number, cb: () => unknown): () => void', () =>
   })
 
   it('always can be cancelled', async () => {
-    const cb = jest.fn().mockImplementation(() => cancel())
+    const cb = vi.fn().mockImplementation(() => cancel())
 
     const cancel = setTimeoutLoop(0, cb)
     await delay(1000)
