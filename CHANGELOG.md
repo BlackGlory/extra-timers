@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/BlackGlory/extra-timers/compare/v0.2.6...v0.3.0) (2025-09-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* - CommonJS => ESM
+- The minimal version of Node.js is v22
+
+### Features
+
+* improve `setTimeout` for edge cases ([047255e](https://github.com/BlackGlory/extra-timers/commit/047255e4704e9d30a92762fe4923b8861c331769))
+
+
+* upgrade dependencies ([5ba81b4](https://github.com/BlackGlory/extra-timers/commit/5ba81b4c4a4552a6a804dda4cff95e6b5d8263ed))
+
 ### [0.2.6](https://github.com/BlackGlory/extra-timers/compare/v0.2.5...v0.2.6) (2023-06-11)
 
 
