@@ -1,10 +1,12 @@
 import { setTimeout } from './set-timeout.js'
 
-export function setImmediate(cb: () => unknown): () => void {
+export function setImmediate(
+  callback: () => unknown
+): () => void {
   if (globalThis.setImmediate) {
-    const timer = globalThis.setImmediate(cb)
+    const timer = globalThis.setImmediate(callback)
     return () => clearImmediate(timer)
   } else {
-    return setTimeout(0, cb)
+    return setTimeout(0, callback)
   }
 }

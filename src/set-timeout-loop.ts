@@ -1,6 +1,10 @@
+import { Awaitable } from 'justypes'
 import { setTimeout } from './set-timeout.js'
 
-export function setTimeoutLoop(timeout: number, cb: () => unknown): () => void {
+export function setTimeoutLoop(
+  timeout: number
+, callback: () => Awaitable<unknown>
+): () => void {
   let isCancelled = false
   let cancel = setTimeout(timeout, handler)
 
@@ -10,7 +14,7 @@ export function setTimeoutLoop(timeout: number, cb: () => unknown): () => void {
   }
 
   async function handler(): Promise<void> {
-    await cb()
+    await callback()
 
     if (!isCancelled) {
       cancel = setTimeout(timeout, handler)

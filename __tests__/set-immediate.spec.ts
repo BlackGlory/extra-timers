@@ -3,7 +3,7 @@ import { delay, Deferred } from 'extra-promise'
 import { setImmediate } from '@src/set-immediate.js'
 
 describe('setImmediate', () => {
-  it('will call `cb`', async () => {
+  it('will call `callback`', async () => {
     const deferred = new Deferred<void>()
 
     const start = Date.now()
@@ -13,33 +13,33 @@ describe('setImmediate', () => {
     expect(Date.now() - start).toBeLessThan(500)
   })
 
-  it('will call `cb` once', async () => {
-    const cb = vi.fn()
+  it('will call `callback` once', async () => {
+    const callback = vi.fn()
 
-    setImmediate(cb)
+    setImmediate(callback)
     await delay(100)
 
-    expect(cb).toBeCalledTimes(1)
+    expect(callback).toBeCalledTimes(1)
   })
 
   it('can be cancelled', async () => {
-    const cb = vi.fn()
+    const callback = vi.fn()
 
-    const cancel = setImmediate(cb)
+    const cancel = setImmediate(callback)
     cancel()
     await delay(100)
 
-    expect(cb).not.toBeCalled()
+    expect(callback).not.toBeCalled()
   })
 
   it('can be cancelled multiple times', async () => {
-    const cb = vi.fn()
+    const callback = vi.fn()
 
-    const cancel = setImmediate(cb)
+    const cancel = setImmediate(callback)
     cancel()
     cancel()
     await delay(100)
 
-    expect(cb).not.toBeCalled()
+    expect(callback).not.toBeCalled()
   })
 })

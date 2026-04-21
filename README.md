@@ -11,7 +11,10 @@ yarn add extra-timers
 ## API
 ### setTimeout
 ```ts
-function setTimeout(timeout: number, cb: () => unknown): () => void
+function setTimeout(
+  timeout: number
+, callback: () => unknown
+): () => void
 ```
 
 A wrapper for `globalThis.setTimeout`, with the following differences:
@@ -23,28 +26,39 @@ A wrapper for `globalThis.setTimeout`, with the following differences:
 
 ### setSchedule
 ```ts
-function setSchedule(timestamp: number, cb: () => unknown): () => void
+function setSchedule(
+  timestamp: number
+, callback: () => unknown
+): () => void
 ```
 
 A wrapper for `setTimeout`.
 
 ### setInterval
 ```ts
-function setInterval(timeout: number, cb: () => unknown): () => void
+function setInterval(
+  timeout: number
+, callback: () => unknown
+): () => void
 ```
 
 A wrapper for `setTimeout` instead of `globalThis.setInterval`.
 
 ### setImmediate
 ```ts
-function setImmediate(cb: () => unknown): () => void
+function setImmediate(
+  callback: () => unknown
+): () => void
 ```
 
-A wrapper for `gloalThis.setImmediate` and `setTimeout(0, cb)`.
+A wrapper for `gloalThis.setImmediate` and `setTimeout(0, callback)`.
 
 ### setTimeoutLoop
 ```ts
-function setTimeoutLoop(timeout: number, cb: () => unknown): () => void
+function setTimeoutLoop(
+  timeout: number
+, callback: () => Awaitalbe<unknown>
+): () => void
 ```
 
 Create an interval timer using the nested `setTimeout`,
@@ -54,7 +68,10 @@ The return value is the function to cancel the timer.
 
 ### setDynamicTimeoutLoop
 ```ts
-function setDynamicTimeoutLoop(timeout: number, cb: () => unknown): () => void
+function setDynamicTimeoutLoop(
+  timeout: number
+, callback: () => Awaitable<unknown>
+): () => void
 ```
 
 Create an interval timer using the nested `setTimeout`,

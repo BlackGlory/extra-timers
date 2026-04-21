@@ -3,7 +3,7 @@ import { delay, Deferred } from 'extra-promise'
 import { setSchedule } from '@src/set-schedule.js'
 
 describe('setSchedule', () => {
-  it('will call `cb` at `timestamp`', async () => {
+  it('will call `callback` at `timestamp`', async () => {
     const deferred = new Deferred<void>()
 
     const start = Date.now()
@@ -14,35 +14,35 @@ describe('setSchedule', () => {
     expect(Date.now() - start).toBeLessThan(1500)
   })
 
-  it('will call `cb` once', async () => {
-    const cb = vi.fn()
+  it('will call `callback` once', async () => {
+    const callback = vi.fn()
 
-    setSchedule(0, cb)
+    setSchedule(0, callback)
     await delay(100)
 
-    expect(cb).toBeCalledTimes(1)
+    expect(callback).toBeCalledTimes(1)
   })
 
   it('can be cancelled', async () => {
-    const cb = vi.fn()
+    const callback = vi.fn()
     const start = Date.now()
 
-    const cancel = setSchedule(start + 100, cb)
+    const cancel = setSchedule(start + 100, callback)
     cancel()
     await delay(1000)
 
-    expect(cb).not.toBeCalled()
+    expect(callback).not.toBeCalled()
   })
 
   it('can be cancelled multiple times', async () => {
-    const cb = vi.fn()
+    const callback = vi.fn()
     const start = Date.now()
 
-    const cancel = setSchedule(start + 100, cb)
+    const cancel = setSchedule(start + 100, callback)
     cancel()
     cancel()
     await delay(1000)
 
-    expect(cb).not.toBeCalled()
+    expect(callback).not.toBeCalled()
   })
 })

@@ -9,7 +9,10 @@ import { pass } from '@blackglory/pass'
  */
 const MAX_TIMEOUT = 2147483647
 
-export function setTimeout(timeout: number, cb: () => unknown): () => void {
+export function setTimeout(
+  timeout: number
+, callback: () => unknown
+): () => void {
   if (isPositiveInfinity(timeout)) return pass
 
   /**
@@ -22,9 +25,9 @@ export function setTimeout(timeout: number, cb: () => unknown): () => void {
     () => {
       const elapsedTime = Date.now() - targetTimestamp
       if (elapsedTime >= 0) {
-        cb()
+        callback()
       } else {
-        cancel = setTimeout(-elapsedTime, cb)
+        cancel = setTimeout(-elapsedTime, callback)
       }
     }
   , Math.min(timeout, MAX_TIMEOUT)

@@ -1,6 +1,9 @@
 import { setTimeout } from './set-timeout.js'
 
-export function setInterval(timeout: number, cb: () => unknown): () => void {
+export function setInterval(
+  timeout: number
+, callback: () => unknown
+): () => void {
   let isCancelled = false
   let cancel = setTimeout(timeout, handler)
 
@@ -9,11 +12,11 @@ export function setInterval(timeout: number, cb: () => unknown): () => void {
     cancel()
   }
 
-  async function handler(): Promise<void> {
+  function handler(): void {
     if (!isCancelled) {
       cancel = setTimeout(timeout, handler)
 
-      await cb()
+      callback()
     }
   }
 }
